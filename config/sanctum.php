@@ -1,11 +1,13 @@
 <?php
 
+use App\Http\Middleware\EncryptCookies;
+use App\Http\Middleware\VerifyCsrfToken;
+use Laravel\Sanctum\Http\Middleware\AuthenticateSession;
 use Laravel\Sanctum\Sanctum;
 
 return [
 
-    /*
-    |--------------------------------------------------------------------------
+    /*-------------------------------------------------------------------------
     | Stateful Domains
     |--------------------------------------------------------------------------
     |
@@ -21,8 +23,7 @@ return [
         Sanctum::currentApplicationUrlWithPort()
     ))),
 
-    /*
-    |--------------------------------------------------------------------------
+    /*-------------------------------------------------------------------------
     | Sanctum Guards
     |--------------------------------------------------------------------------
     |
@@ -33,10 +34,9 @@ return [
     |
     */
 
-    'guard' => ['web'],
+    'guard' => explode(',', env('SANCTUM_GUARD', 'web')),
 
-    /*
-    |--------------------------------------------------------------------------
+    /*-------------------------------------------------------------------------
     | Expiration Minutes
     |--------------------------------------------------------------------------
     |
@@ -48,8 +48,7 @@ return [
 
     'expiration' => null,
 
-    /*
-    |--------------------------------------------------------------------------
+    /*-------------------------------------------------------------------------
     | Token Prefix
     |--------------------------------------------------------------------------
     |
@@ -63,8 +62,7 @@ return [
 
     'token_prefix' => env('SANCTUM_TOKEN_PREFIX', ''),
 
-    /*
-    |--------------------------------------------------------------------------
+    /*-------------------------------------------------------------------------
     | Sanctum Middleware
     |--------------------------------------------------------------------------
     |
@@ -75,9 +73,9 @@ return [
     */
 
     'middleware' => [
-        'authenticate_session' => Laravel\Sanctum\Http\Middleware\AuthenticateSession::class,
-        'encrypt_cookies' => App\Http\Middleware\EncryptCookies::class,
-        'verify_csrf_token' => App\Http\Middleware\VerifyCsrfToken::class,
+        'authenticate_session' => AuthenticateSession::class,
+        'encrypt_cookies' => EncryptCookies::class,
+        'verify_csrf_token' => VerifyCsrfToken::class,
     ],
 
 ];
