@@ -45,6 +45,45 @@
         ],
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
+        ],
+        "insights":[
+            "php artisan insights"
+        ],
+        "analyse":[
+            "./vendor/bin/phpstan analyse --memory-limit=2G"
+        ],
+        "analyse-strict":[
+            "./vendor/bin/phpstan analyse --memory-limit=2G --level=9"
+        ],
+        "analyse-dependencies":[
+            "./vendor/bin/composer-dependency-analyser"
+        ],
+        "fix":[
+            "./vendor/bin/pint"
+        ],
+        "lint": [
+            "./vendor/bin/pint --test"
+        ],
+        "test": [
+            "./vendor/bin/pest --parallel --stop-on-failure"
+        ],
+        "test-coverage": [
+            "./vendor/bin/pest --coverage --min=80"
+        ],
+        "type-coverage": [
+            "./vendor/bin/pest --type-coverage --min=80"
+        ],
+        "ci": [
+            "./vendor/bin/pest --coverage --min=80",
+            "./vendor/bin/pest --coverage --min=80",
+            "./vendor/bin/pint --test",
+            "./vendor/bin/phpstan analyse --memory-limit=2G",
+            "./vendor/bin/pest --parallel --stop-on-failure"
+        ],
+        "ide": [
+            "@php artisan ide-helper:generate",
+            "@php artisan ide-helper:meta",
+            "@php artisan ide-helper:models -M"
         ]
     },
     "extra": {
