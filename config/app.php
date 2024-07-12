@@ -156,7 +156,9 @@ return [
         /*
          * Package Service Providers...
          */
-
+        App\Providers\HorizonServiceProvider::class,
+        App\Providers\TelescopeServiceProvider::class,
+        App\Providers\PulseServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -164,9 +166,7 @@ return [
         App\Providers\AuthServiceProvider::class,
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
-        App\Providers\HorizonServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        App\Providers\TelescopeServiceProvider::class,
     ])->toArray(),
 
     /*-------------------------------------------------------------------------
