@@ -170,7 +170,7 @@ return [
     'defaults' => [
         'supervisor-1' => [
             'connection' => 'redis',
-            'queue' => ['default', 'notifications', 'imports', 'exports'],
+            'queue' => ['default', 'notifications', 'bank_slip_batch_processing', 'bank_slip_processing'],
             'balance' => 'auto',
             'autoScalingStrategy' => 'auto',
             'maxProcesses' => 5,
