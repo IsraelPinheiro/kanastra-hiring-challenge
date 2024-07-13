@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\BankSlipStatus as Status;
 use App\Models\BankSlipBatch;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -20,6 +21,7 @@ return new class extends Migration
             $table->string('debtor_government_id')->index();
             $table->string('debtor_email')->index();
             $table->decimal('amount', 12, 2);
+            $table->enum('status', Status::values())->default(Status::AwaitingPayment());
             $table->date('due_date');
             $table->timestamp('notified_at')->nullable();
             $table->timestamps();
