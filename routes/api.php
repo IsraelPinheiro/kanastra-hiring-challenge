@@ -1,10 +1,10 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\StatusController;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
+/*-------------------------------------------------------------------------
 | API Routes
 |--------------------------------------------------------------------------
 |
@@ -14,6 +14,5 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::get('/', fn (): RedirectResponse => redirect(route('status')));
+Route::get('/status', StatusController::class)->name('status');
