@@ -16,6 +16,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->uuid('debt_id')->unique();
             $table->foreignIdFor(BankSlipBatch::class)->constrained()->cascadeOnDelete();
+            $table->string('debtor_name');
             $table->string('debtor_government_id')->index();
             $table->string('debtor_email')->index();
             $table->decimal('amount', 12, 2);
