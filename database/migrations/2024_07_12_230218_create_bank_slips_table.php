@@ -24,6 +24,8 @@ return new class extends Migration
             $table->enum('status', Status::values())->default(Status::AwaitingPayment());
             $table->date('due_date');
             $table->timestamp('notified_at')->nullable();
+            $table->timestamp('canceled_at')->nullable();
+            $table->timestamp('paid_at')->nullable();
             $table->timestamps();
         });
     }
