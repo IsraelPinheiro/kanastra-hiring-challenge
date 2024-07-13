@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Enums\BankSlipStatus;
+use App\Enums\BankSlipBatchStatus as Status;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -27,7 +27,7 @@ class BankSlipBatchFactory extends Factory
     public function processing(): self
     {
         return $this->state([
-            'status' => BankSlipStatus::Processing(),
+            'status' => Status::Processing(),
             'processing_attempts' => fake()->numberBetween(1, 3),
             'processing_started_at' => now(),
         ]);
@@ -36,7 +36,7 @@ class BankSlipBatchFactory extends Factory
     public function processed(): self
     {
         return $this->state([
-            'status' => BankSlipStatus::Processed(),
+            'status' => Status::Processed(),
             'processing_attempts' => 1,
             'processing_started_at' => now(),
             'processing_finished_at' => now()->addSeconds(fake()->numberBetween(1, 60)),
@@ -46,7 +46,7 @@ class BankSlipBatchFactory extends Factory
     public function failed(): self
     {
         return $this->state([
-            'status' => BankSlipStatus::Failed(),
+            'status' => Status::Failed(),
             'processing_attempts' => 1,
             'processing_started_at' => now(),
         ]);
