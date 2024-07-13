@@ -26,7 +26,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Builder::morphUsingUuids();
-        //Model::unguard();
+        Model::unguard();
         Model::shouldBeStrict();
         Password::defaults(
             fn () => Password::min(8)

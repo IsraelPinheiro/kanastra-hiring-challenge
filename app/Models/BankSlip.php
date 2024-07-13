@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * @mixin IdeHelperBankSlip
+ */
 class BankSlip extends Model
 {
     use HasFactory;
@@ -15,11 +18,7 @@ class BankSlip extends Model
 
     /** Definition */
     protected $casts = [
-        //
-    ];
-
-    protected $fillable = [
-        //
+        'amount' => 'decimal:2',
     ];
 
     /** Relationships */
