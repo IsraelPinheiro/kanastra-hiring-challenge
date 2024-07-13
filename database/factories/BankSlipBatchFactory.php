@@ -18,8 +18,7 @@ class BankSlipBatchFactory extends Factory
     public function definition(): array
     {
         return [
-
-            'file_path' => 'batches/'.fake()->unique()->uuid.'.csv',
+            'file_path' => 'bank_slip_batches/'.fake()->uuid().'.csv',
             'bank_slips_count' => fake()->numberBetween(1, 10000),
         ];
     }
@@ -49,6 +48,13 @@ class BankSlipBatchFactory extends Factory
             'status' => Status::Failed(),
             'processing_attempts' => 1,
             'processing_started_at' => now(),
+        ]);
+    }
+
+    public function canceled(): self
+    {
+        return $this->state([
+            'status' => Status::Canceled(),
         ]);
     }
 }

@@ -10,6 +10,7 @@ use ArchTech\Enums\Values;
  * @method static string Processing()
  * @method static string Processed()
  * @method static string Failed()
+ * @method static string Canceled()
  */
 enum BankSlipBatchStatus: string
 {
@@ -20,4 +21,5 @@ enum BankSlipBatchStatus: string
     case Processing = 'processing';
     case Processed = 'processed';
     case Failed = 'failed';
+    case Canceled = 'canceled';
 }

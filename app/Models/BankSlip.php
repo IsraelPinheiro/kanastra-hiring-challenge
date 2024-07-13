@@ -34,6 +34,8 @@ class BankSlip extends Model
     {
         $this->update(['status' => Status::Canceled()]);
 
+        //TODO: Notify debtor about the cancelation
+
         return $this;
     }
 
