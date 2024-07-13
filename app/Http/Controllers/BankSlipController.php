@@ -20,11 +20,17 @@ class BankSlipController extends Controller
             'created_at_end' => ['nullable', 'date', Rule::when(request('created_at_start'), 'after_or_equal:created_at_start'), 'before_or_equal:today'],
             'search' => ['nullable', 'string'],
             'status' => ['nullable', Rule::in(Status::values())],
+            'batch_id' => ['nullable', Rule::exists('bank_slip_batches', 'id')],
         ]);
 
         return response()->json(
             BankSlip::search(request('search'))
+                ->when(request('batch_id'), fn (Builder $query): Builder => $query->where('bank_slip_batch_id', request('batch_id')))
                 ->when(request('status'), fn (Builder $query): Builder => $query->where('status', request('status')))
+                ->when(request('due_date_start'), fn (Builder $query): Builder => $query->whereDate('due_date', '>=', request('due_date_start')))
+                ->when(request('due_date_end'), fn (Builder $query): Builder => $query->whereDate('due_date', '<=', request('due_date_end')))
+                ->when(request('created_at_start'), fn (Builder $query): Builder => $query->whereDate('created_at', '>=', request('created_at_start')))
+                ->when(request('created_at_end'), fn (Builder $query): Builder => $query->whereDate('created_at', '<=', request('created_at_end')))
                 ->paginate(),
             JsonResponse::HTTP_OK
         );
