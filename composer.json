@@ -60,7 +60,10 @@
             "@php artisan key:generate --ansi"
         ],
         "insights":[
-            "php artisan insights"
+            "php artisan insights -v"
+        ],
+        "insights-fix":[
+            "php artisan insights -v --fix"
         ],
         "analyse":[
             "./vendor/bin/phpstan analyse --memory-limit=2G"

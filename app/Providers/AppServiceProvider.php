@@ -28,12 +28,13 @@ class AppServiceProvider extends ServiceProvider
         Builder::morphUsingUuids();
         //Model::unguard();
         Model::shouldBeStrict();
-        Password::defaults(fn () => Password::min(8)
-            ->letters()
-            ->mixedCase()
-            ->numbers()
-            ->symbols()
-            ->uncompromised()
+        Password::defaults(
+            fn () => Password::min(8)
+                ->letters()
+                ->mixedCase()
+                ->numbers()
+                ->symbols()
+                ->uncompromised()
         );
     }
 }
