@@ -39,6 +39,7 @@ class MailBankSlipCanceled extends Mailable implements ShouldQueue
     {
         return new Content(
             view: 'mails.debtor.BankSlipCanceled',
+            with: ['bankSlip' => $this->bankSlip],
         );
     }
 
