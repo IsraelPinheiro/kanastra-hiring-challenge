@@ -14,7 +14,9 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Bus;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use Throwable;
 
 class ProcessBankSlipBatch implements ShouldBeUnique, ShouldQueue
 {
@@ -43,10 +45,16 @@ class ProcessBankSlipBatch implements ShouldBeUnique, ShouldQueue
                 $row['debtDueDate'],
                 $row['debtId']
             )
-        ))->then(function (Batch $batch) {
+        ))
+        ->finally(function (Batch $batch) {
             $this->bankSlipBatch->update([
+                'processing_attempts' => $this->bankSlipBatch->processing_attempts + 1,
                 'status' => $batch->hasFailures() ? BankSlipBatchStatus::Failed() : BankSlipBatchStatus::Processed(),
             ]);
+
+            if($batch->hasFailures()) {
+                Log::error("Batch {$this->bankSlipBatch->id} - One or more bank slips failed to be created.");
+            }
         })->name('Batch {$this->bankSlipBatch->id} processing')
             ->allowFailures()
             ->dispatch();
