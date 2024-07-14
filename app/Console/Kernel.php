@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Jobs\KickoffBankSlipBatchProcessing;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -12,7 +13,10 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
+        $schedule->command('horizon:snapshot')->everyFiveMinutes(); //Take a Horizon snapshot every five minutes
         $schedule->command('telescope:prune --hours=48')->daily(); //Prune Telescope entries older than 48 hours every day
+        $schedule->command('queue:prune-batches --hours=48')->daily(); //Prune queued batches older than 48 hours every day
+        $schedule->job(KickoffBankSlipBatchProcessing::class)->everyFiveSeconds(); //Kick off batch processing every five seconds
     }
 
     /**
