@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enums\BankSlipBatchStatus as Status;
+use App\Http\Traits\CsvParser;
 use App\Models\BankSlipBatch;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\JsonResponse;
@@ -14,24 +15,37 @@ use Throwable;
 
 class BankSlipBatchController extends Controller
 {
+    use CsvParser;
+
     public function store(Request $request)
     {
         request()->validate([
-            'batch_file' => ['required', 'file', 'mimetypes:text/plain,text/csv'],
+            'batch_file' => ['required', 'file', 'mimetypes:text/csv'],
         ]);
 
-        //TODO: Validate file content
+        $csvData = $this->CsvToArray(request()->file('batch_file')->get());
+
+        request()->merge([
+            'csv_data' => $csvData,
+        ])->validate([
+            'csv_data.*.name' => ['required', 'string'],
+            'csv_data.*.governmentId' => ['required', 'numeric'],
+            'csv_data.*.email' => ['required', 'email'],
+            'csv_data.*.debtAmount' => ['required', 'numeric'],
+            'csv_data.*.debtDueDate' => ['required', 'date'],
+            'csv_data.*.debtId' => ['required', 'uuid'],
+        ]);
 
         try {
             $uplodadedFile = Storage::disk(config('filesystems.default'))->put('/bank_slip_batches', $request->file('batch_file'));
         } catch (Throwable $th) {
-            dd($th);
             abort(JsonResponse::HTTP_INTERNAL_SERVER_ERROR, __('bank_slip_batches.file_upload_error'));
         }
 
         return response()->json(
             BankSlipBatch::create([
                 'file_path' => $uplodadedFile,
+                'bank_slips_count' => count($csvData),
             ])->fresh(),
             JsonResponse::HTTP_CREATED
         );
