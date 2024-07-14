@@ -49,4 +49,14 @@ class BankSlipController extends Controller
 
         return response()->json($bankSlip, JsonResponse::HTTP_OK);
     }
+
+    public function pay(BankSlip $bankSlip): JsonResponse
+    {
+        abort_if($bankSlip->status == Status::Paid(), JsonResponse::HTTP_BAD_REQUEST, __('bank_slips.already_paid'));
+        abort_if($bankSlip->status == Status::Canceled(), JsonResponse::HTTP_BAD_REQUEST, __('bank_slips.cannot_pay_canceled_slip'));
+
+        $bankSlip->pay();
+
+        return response()->json($bankSlip, JsonResponse::HTTP_OK);
+    }
 }

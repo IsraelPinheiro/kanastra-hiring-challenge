@@ -54,6 +54,13 @@ class BankSlip extends Model
         return $this;
     }
 
+    public function pay(): static
+    {
+        $this->update(['status' => Status::Paid(), 'paid_at' => now()]);
+
+        return $this;
+    }
+
     public function getPdfFilePath(): string
     {
         $filePath = 'bank_slip_pdf/'.$this->debt_id.'.pdf';

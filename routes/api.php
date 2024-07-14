@@ -26,5 +26,6 @@ Route::prefix('/batches')->controller(BankSlipBatchController::class)->name('bat
 Route::prefix('/bank-slips')->controller(BankSlipController::class)->name('bank-slips.')->group(function (): void {
     Route::get('/', 'index')->name('index');
     Route::get('/{bankSlip}', 'show')->name('show');
+    Route::post('/{bankSlip}/pay', 'pay')->name('pay');
     Route::delete('/{bankSlip}', 'cancel')->name('cancel');
 });
