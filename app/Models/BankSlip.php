@@ -28,7 +28,7 @@ class BankSlip extends Model
         parent::boot();
 
         static::created(function (self $bankSlip) {
-            Mail::to($bankSlip->debtor_email)->send(new MailBankSlipCreated($bankSlip));
+            Mail::to($bankSlip->debtor_email)->later(30, new MailBankSlipCreated($bankSlip));
         });
     }
 

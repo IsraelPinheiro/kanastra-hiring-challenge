@@ -16,7 +16,9 @@ class CreateBankSlip implements ShouldBeUnique, ShouldQueue
 {
     use Batchable, Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public function __construct(private string $bankSlipBatchId, private string $debtorName, private string $debtorEmail, private string $debtorGovernmentId, private float $amount, private string $dueDate, private string $debtId) {}
+    public function __construct(private string $bankSlipBatchId, private string $debtorName, private string $debtorEmail, private string $debtorGovernmentId, private float $amount, private string $dueDate, private string $debtId) {
+        $this->queue = 'bank_slip_processing';
+    }
 
     public function uniqueId(): string
     {
