@@ -20,7 +20,7 @@ class ProcessBankSlipBatch implements ShouldBeUnique, ShouldQueue
 {
     use CsvParser, Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public function __construct(private BankSlipBatch $bankSlipBatch, private int $chunkSize = 1000)
+    public function __construct(private BankSlipBatch $bankSlipBatch, private int $chunkSize = 10000)
     {
         $this->queue = 'bank_slip_batch_processing';
     }
