@@ -4,7 +4,6 @@ namespace App\Models;
 
 use App\Enums\BankSlipStatus as Status;
 use App\Mail\Debtor\MailBankSlipCanceled;
-use App\Mail\Debtor\MailBankSlipCreated;
 use Barryvdh\DomPDF\Facade\Pdf as PDF;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -22,15 +21,6 @@ class BankSlip extends Model
 {
     use HasFactory;
     use HasUuids;
-
-    protected static function boot(): void
-    {
-        parent::boot();
-
-        static::created(function (self $bankSlip) {
-            Mail::to($bankSlip->debtor_email)->later(30, new MailBankSlipCreated($bankSlip));
-        });
-    }
 
     /** Definition */
     protected $casts = [

@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Jobs\DispatchPendingNotifications;
 use App\Jobs\KickoffBankSlipBatchProcessing;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -17,6 +18,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('telescope:prune --hours=48')->daily(); //Prune Telescope entries older than 48 hours every day
         $schedule->command('queue:prune-batches --hours=48')->daily(); //Prune queued batches older than 48 hours every day
         $schedule->job(KickoffBankSlipBatchProcessing::class)->everyFiveSeconds(); //Kick off batch processing every five seconds
+        $schedule->job(DispatchPendingNotifications::class)->everyMinute(); //Dispatch pending notifications every minute
     }
 
     /**
