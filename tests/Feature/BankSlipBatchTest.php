@@ -5,29 +5,29 @@ namespace Tests\Feature\Auth;
 use App\Enums\BankSlipBatchStatus;
 use App\Models\BankSlipBatch;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Str;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Str;
 
 /** Creation */
 test('batch can be created', function () {
     $this->json('POST', '/api/batches', [
-        'batch_file' => new UploadedFile(__DIR__ . '/input_file_10_OK.csv', 'input_file_10_OK.csv', 'text/csv', null, true)
+        'batch_file' => new UploadedFile(__DIR__.'/input_file_10_OK.csv', 'input_file_10_OK.csv', 'text/csv', null, true),
     ])
-    ->assertStatus(JsonResponse::HTTP_CREATED);
+        ->assertStatus(JsonResponse::HTTP_CREATED);
 });
 
 test('batch cant be created with invalid file', function () {
     $this->json('POST', '/api/batches', [
-        'batch_file' => new UploadedFile(__DIR__ . '/input_file_10_INVALID.csv', 'input_file_10_INVALID.csv', 'text/csv', null, true)
+        'batch_file' => new UploadedFile(__DIR__.'/input_file_10_INVALID.csv', 'input_file_10_INVALID.csv', 'text/csv', null, true),
     ])
-    ->assertStatus(JsonResponse::HTTP_UNPROCESSABLE_ENTITY);
+        ->assertStatus(JsonResponse::HTTP_UNPROCESSABLE_ENTITY);
 });
 
 test('batch cant be created with invalid file format', function () {
     $this->json('POST', '/api/batches', [
-        'batch_file' => new UploadedFile(__DIR__ . '/input_file_10_OK.pdf', 'input_file_10_OK.pdf', 'application/pdf', null, true)
+        'batch_file' => new UploadedFile(__DIR__.'/input_file_10_OK.pdf', 'input_file_10_OK.pdf', 'application/pdf', null, true),
     ])
-    ->assertStatus(JsonResponse::HTTP_UNPROCESSABLE_ENTITY);
+        ->assertStatus(JsonResponse::HTTP_UNPROCESSABLE_ENTITY);
 });
 
 /** Listing */
@@ -36,19 +36,19 @@ test('batches are listed', function () {
     $this->json('GET', '/api/batches', [
         'start_date' => today(),
         'end_date' => today(),
-        'status' => null
+        'status' => null,
     ])->assertStatus(JsonResponse::HTTP_OK)->assertJsonCount(2, 'data');
 });
 
 test('batches are listed correctly with date filter', function () {
     BankSlipBatch::factory()->create();
     BankSlipBatch::factory()->create([
-        'created_at' => today()->subDay()
+        'created_at' => today()->subDay(),
     ]);
     $this->json('GET', '/api/batches', [
         'start_date' => today(),
         'end_date' => today(),
-        'status' => null
+        'status' => null,
     ])->assertStatus(JsonResponse::HTTP_OK)->assertJsonCount(1, 'data');
 });
 
@@ -58,7 +58,7 @@ test('batches are listed correctly with status filter', function () {
     $this->json('GET', '/api/batches', [
         'start_date' => today(),
         'end_date' => today(),
-        'status' => BankSlipBatchStatus::Canceled()
+        'status' => BankSlipBatchStatus::Canceled(),
     ])->assertStatus(JsonResponse::HTTP_OK)->assertJsonCount(1, 'data');
 });
 
