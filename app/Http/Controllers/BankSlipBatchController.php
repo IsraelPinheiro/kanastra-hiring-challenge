@@ -39,7 +39,7 @@ class BankSlipBatchController extends Controller
         try {
             $uplodadedFile = Storage::disk(config('filesystems.default'))->put('/bank_slip_batches', $request->file('batch_file'));
         } catch (Throwable $th) {
-            abort(JsonResponse::HTTP_INTERNAL_SERVER_ERROR, __('bank_slip_batches.file_upload_error'));
+            abort(JsonResponse::HTTP_INTERNAL_SERVER_ERROR, __('bank_slip_batch.file_upload_error'));
         }
 
         return response()->json(
@@ -83,8 +83,8 @@ class BankSlipBatchController extends Controller
 
     public function cancel(BankSlipBatch $bankSlipBatch): JsonResponse
     {
-        abort_if($bankSlipBatch->status == Status::Processing(), JsonResponse::HTTP_BAD_REQUEST, __('bank_slip_batches.cannot_cancel_processing_batch'));
-        abort_if($bankSlipBatch->status == Status::Canceled(), JsonResponse::HTTP_BAD_REQUEST, __('bank_slip_batches.already_canceled'));
+        abort_if($bankSlipBatch->status == Status::Processing(), JsonResponse::HTTP_BAD_REQUEST, __('bank_slip_batch.cannot_cancel_processing_batch'));
+        abort_if($bankSlipBatch->status == Status::Canceled(), JsonResponse::HTTP_BAD_REQUEST, __('bank_slip_batch.already_canceled'));
 
         $bankSlipBatch->cancel();
 

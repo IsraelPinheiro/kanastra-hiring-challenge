@@ -44,6 +44,7 @@ class BankSlipController extends Controller
     public function cancel(BankSlip $bankSlip): JsonResponse
     {
         abort_unless($bankSlip->status == Status::AwaitingPayment(), JsonResponse::HTTP_BAD_REQUEST, __('bank_slips.cannot_cancel_paid_slip'));
+        abort_unless($bankSlip->status != Status::Canceled(), JsonResponse::HTTP_BAD_REQUEST, __('bank_slips.already_canceled'));
 
         $bankSlip->cancel();
 
