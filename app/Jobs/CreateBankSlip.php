@@ -16,7 +16,7 @@ class CreateBankSlip implements ShouldBeUnique, ShouldQueue
 {
     use Batchable, Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public function __construct(private string $debtorName, private string $debtorEmail, private string $debtorGovernmentId, private float $amount, private string $dueDate, private string $debtId) {}
+    public function __construct(private string $bankSlipBatchId, private string $debtorName, private string $debtorEmail, private string $debtorGovernmentId, private float $amount, private string $dueDate, private string $debtId) {}
 
     public function uniqueId(): string
     {
@@ -32,6 +32,7 @@ class CreateBankSlip implements ShouldBeUnique, ShouldQueue
         }
 
         BankSlip::create([
+            'bank_slip_batch_id' => $this->bankSlipBatchId,
             'debtor_name' => $this->debtorName,
             'debtor_email' => $this->debtorEmail,
             'debtor_government_id' => $this->debtorGovernmentId,
