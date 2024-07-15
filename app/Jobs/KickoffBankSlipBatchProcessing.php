@@ -11,7 +11,6 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Str;
 
 class KickoffBankSlipBatchProcessing implements ShouldBeUnique, ShouldQueue
@@ -37,10 +36,7 @@ class KickoffBankSlipBatchProcessing implements ShouldBeUnique, ShouldQueue
             return;
         }
 
-        Bus::batch($this->batches->map(
-            fn (BankSlipBatch $batch) => new ProcessBankSlipBatch($batch)
-        ))->name('Kickoff bank slip batch processing')
-            ->dispatch();
+        collect($this->batches)->each(fn (BankSlipBatch $batch) => ProcessBankSlipBatch::dispatch($batch));
 
         $this->batches->toQuery()->update([
             'status' => Status::Processing(),
