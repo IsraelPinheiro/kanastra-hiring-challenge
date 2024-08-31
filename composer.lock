@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "archtechx/enums",
-            "version": "v1.0.1",
+            "version": "v1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/archtechx/enums.git",
-                "reference": "a99ee1a7e083736c22d3a44fd3a988e7e472cf96"
+                "reference": "37326d5e26cdfcc2810f4664cdd625ea4fd528d7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/archtechx/enums/zipball/a99ee1a7e083736c22d3a44fd3a988e7e472cf96",
-                "reference": "a99ee1a7e083736c22d3a44fd3a988e7e472cf96",
+                "url": "https://api.github.com/repos/archtechx/enums/zipball/37326d5e26cdfcc2810f4664cdd625ea4fd528d7",
+                "reference": "37326d5e26cdfcc2810f4664cdd625ea4fd528d7",
                 "shasum": ""
             },
             "require": {
@@ -48,9 +48,9 @@
             "description": "Helpers for making PHP enums more lovable.",
             "support": {
                 "issues": "https://github.com/archtechx/enums/issues",
-                "source": "https://github.com/archtechx/enums/tree/v1.0.1"
+                "source": "https://github.com/archtechx/enums/tree/v1.1.0"
             },
-            "time": "2024-01-28T17:52:47+00:00"
+            "time": "2024-07-15T14:28:34+00:00"
         },
         {
             "name": "barryvdh/laravel-dompdf",
